@@ -1,0 +1,72 @@
+
+#Load required libraries
+
+library(tidyr)
+library(dplyr)
+library(plyr)
+library(ggplot2)
+library(datasets)
+
+#Checking the state data sets
+?state
+
+#Inspecting the state data sets
+head(state.x77)
+dim(state.x77)
+
+head(state.abb)
+NROW(state.abb)
+
+head(state.area)
+NROW(state.area)
+
+head(state.name)
+NROW(state.name)
+
+head(state.region)
+NROW(state.region)
+
+head(state.division)
+NROW(state.region)
+
+head(state.center)
+NROW(state.center)
+
+## Quesion: What is the reason for Low Life Expectancy Rate in states across United States ?
+
+Approach: 
+1. Firstly, I am taking into inspection the basic factor that affects a state, the 'population desnity'.The population density is equal to total population of state/area of state..
+2. Now, I am anlayzing and finding the relation between population density and the per capita income of the states.
+3. It is observed that increase in population density increseses the per capita income of the population. 
+4. Now, next I analyze the per capita income of population with the illiteracy rate. The illiteracy rate decreases as the per capita income increases.
+5. Next, I anlayze the relationship between illiteracy rate and High School Graduates. As illiteracy decreases, the HS Grad increases - very epxected.
+6. Now, we see the relation between the Life Expectancy and HS Graduation. It is interesting to note and observe that the Life Expectancy increases as the HS Grad value increases.
+7. We also see the relation between HS Grad value and Murder.The murder rate decreases as the HS Grad rate increases.
+8. Then we also check if their is pattern relation between the Frost temperature and life expectancy. As we observe,there is not any fixed relation.
+
+__Colcusion: The Life Expectancy increases as the High  School Graduation rate increases i.e more peopl are educated. Also, it increases whe illiteracy decreases ans income increseases. Eventually, income increases if population density increases.So, it means increase in population in an area increases the income and eventually makes people more education which in turn increases the Life ExpectancyAlso to add that Murder rate decreases as the HS Grads value increases__
+
+``` {r}
+#Calculating the population density
+
+population.density <- state.x77$Population/state.x77$Area
+
+#Plotting and analyzing the population density with the per capita income
+ggplot(state.x77,aes(population.density,state.x77$Income)) + geom_smooth() + geom_point()
+
+#Plotting and analyzing the Income with the Illiteracy rate
+ggplot(state.x77,aes(state.x77$Income,state.x77$Illiteracy)) + geom_smooth() + xlab("Frost Temperature") + ylab("Life Expectancy")
+
+#Plotting and analyzing the Illiteracy rate with the High School graduation rate
+ggplot(state.x77,aes(state.x77$Illiteracy,state.x77$`HS Grad`)) + geom_smooth() + xlab("Illiteracy") + ylab("HS grad")
+
+#Plotting and analyzing the HS Grad Rate with the Life Expectancy
+ggplot(state.x77,aes(state.x77$`HS Grad` ,state.x77$`Life Exp`)) + geom_smooth() + xlab("HS Grad") + ylab("Life Expectancy")
+
+ggplot(state.x77,aes(state.x77$`HS Grad` ,state.x77$Murder )) + geom_smooth() + xlab("HS Grad") + ylab("Murder")
+
+#Plotting and analyzing the Frost Temperature with the Life Expectancy
+ggplot(state.x77,aes(state.x77$Frost ,state.x77$`Life Exp`)) + geom_smooth() + xlab("Frost Temperature") + ylab("Life Expectancy")
+
+```
+
